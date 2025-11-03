@@ -1,0 +1,49 @@
+# =============================================
+# YouTube Thumbnail A/B Testing Project
+# Data Science Intern - Advanced Statistics
+# =============================================
+
+# CORE DATA SCIENCE PACKAGES
+# --------------------------
+numpy>=1.21.0              # Numerical computing - array operations, mathematical functions
+pandas>=1.3.0              # Data manipulation and analysis - DataFrames, data cleaning
+scipy>=1.7.0               # Scientific computing - statistical tests, distributions
+
+# STATISTICAL MODELING
+# --------------------
+statsmodels>=0.13.0        # Statistical models - logistic regression, hypothesis testing
+scikit-learn>=1.0.0        # Machine learning - preprocessing, model evaluation
+
+# DATA VISUALIZATION
+# ------------------
+matplotlib>=3.5.0          # Basic plotting - static, interactive, and animated visualizations
+seaborn>=0.11.0            # Statistical data visualization - built on matplotlib, better defaults
+
+# BAYESIAN ANALYSIS (ADVANCED)
+# ----------------------------
+pymc3>=3.11.0              # Probabilistic programming - Bayesian modeling, MCMC sampling
+arviz>=0.11.0              # Bayesian model analysis - diagnostics and visualization
+
+# ALTERNATIVE BAYESIAN PACKAGES (Choose one)
+# pystan>=2.19.0           # Alternative to PyMC3 - Stan interface for Bayesian inference
+
+# JUPYTER & DEVELOPMENT
+# ---------------------
+jupyter>=1.0.0             # Interactive computing - notebooks for exploration
+ipython>=7.0.0             # Enhanced interactive Python shell
+ipywidgets>=7.0.0          # Interactive HTML widgets for Jupyter notebooks
+
+# UTILITIES
+# ---------
+tqdm>=4.62.0               # Progress bars - for long-running operations
+joblib>=1.1.0              # Lightweight pipelining - parallel computing, caching
+
+# DATA VERSIONING & REPRODUCIBILITY
+# ---------------------------------
+ gitpython>=3.1.0         # Git operations - for data version control (optional)
+ dvc>=2.0.0               # Data version control - manage datasets and models (optional)
+
+# REPORT GENERATION
+# -----------------
+ jupyterlab>=3.0.0        # Next-gen Jupyter interface (optional)
+ nbconvert>=6.0.0         # Convert Jupyter notebooks to other formats
