@@ -1,0 +1,124 @@
+﻿YouTube Thumbnail A/B Test Analysis Statistics: Statistical Inference 📊
+
+
+Author: AMAL MOHAMED M - DATA SCIENCE INTERN
+________________
+
+
+1. Introduction to Statistical Inference 🔬
+
+
+The final and most critical phase of the A/B test is Statistical Inference. The goal is to move beyond the observed difference (from the EDA) and determine, with a quantifiable degree of certainty, whether this difference is statistically significant—meaning it is unlikely to have occurred due to random chance.
+The Null Hypothesis (H_0) is assumed to be true: There is no difference in the click-through rates (CTR) between the new thumbnail (Treatment) and the old thumbnail (Control).
+The Alternative Hypothesis (H_A) is what we are trying to prove: The CTR for the Treatment Group is higher than the Control Group.
+A common threshold, the Significance Level (alpha), is set at 0.05 (5%). If the P-value from the test is less than 0.05, we reject the null hypothesis and conclude that the new thumbnail is the statistically better performer.
+________________
+
+
+2. Analysis of Primary Statistical Tests
+
+
+Two primary statistical tests were used to evaluate the difference in Click-Through Rates: the Independent T-Test and the Chi-Square Test.
+
+
+A. Independent T-Test Results
+
+
+Metric
+	Control Group
+	Treatment Group
+	Value
+	Interpretation
+	CTR (Mean)
+	0.1247(12.47%)
+	0.1586(15.86)
+	-
+	The observed difference is 3.39 percentage points.
+	Absolute Difference
+	-
+	-
+	0.0339
+	The Treatment Group is 3.39 percentage points better than the Control Group.
+	Relative Improvement
+	-
+	-
+	27.19%
+	The new thumbnail generated 27.19%more clicks relative to the original.
+	T-statistic
+	-
+	-
+	4.8703
+	Measures the size of the difference relative to the variability in the data.
+	P-value
+	-
+	-
+	0.000001
+	The probability of observing this large of a difference if H_0 were true.
+	Result
+	-
+	-
+	Statistically Significant
+	Since P < 0.05, we reject H_0.
+	Conclusion: With a P-value of 0.000001, which is significantly smaller than the alpha=0.05 threshold, we have strong evidence to reject the null hypothesis. The new thumbnail (Treatment) is statistically significantly better than the old one, leading to a 27.19% relative increase in the click rate.
+
+
+B. Chi-Square Test Validation
+
+
+The Chi-Square Test for Independence is the standard method for A/B tests involving binary outcomes (like click/no-click) and compares the distribution of clicks across the two groups.
+Metric
+	Value
+	Interpretation
+	Contingency Table
+	Control Clicks: 633; Treatment Clicks: 781
+	Shows the raw count of clicks and non-clicks by group.
+	Chi-square statistic
+	23.3896
+	The test statistic value.
+	P-value
+	0.000001
+	Matches the T-test result, confirming the statistical significance of the difference.
+	Conclusion: The Chi-Square test confirms the T-test finding. The P-value is extremely low, meaning the observed difference in click behavior between the control and treatment groups is not due to random chance.
+________________
+
+
+3. Covariate Balance Check (Validation of Randomization)
+
+
+Before finalizing the main conclusion, it is critical to re-validate the randomization from the EDA phase using formal statistical tests. If any covariate (feature) shows a statistically significant difference between groups, the main result might be biased.
+Covariate
+	Test Used
+	T-stat / Chi2
+	P-value
+	Conclusion (α=0.05)
+	Age
+	Independent T-Test
+	1.4543
+	0.1459
+	Balanced (p > 0.05)
+	Country
+	Chi-Square Test
+	4.3322
+	0.2278
+	Balanced (P > 0.05)
+	Previously Watched
+	Chi-Square Test
+	4.8575
+	0.0275
+	Imbalanced (P< 0.05)
+	Detailed Analysis of Imbalance (Previously Watched Channel):
+1. Imbalance Detected: The P-value for the Previous Watchers covariate is 0.0275, which is less than 0.05. This means the distribution of users who previously watched the channel is statistically different between the control and treatment groups.
+2. Magnitude Check:
+   * Control Group: 30.0% are previous watchers.
+   * Treatment Group:27.9% are previous watchers.
+   * Difference: 2.1 percentage points.
+3. Implication: The Control Group was disproportionately assigned more users who were already familiar with the channel. Since familiar users often have a higher baseline click rate, this imbalance biases the test against the treatment group. However, despite the Control group having more potentially high-propensity clickers, the Treatment Group still won the A/B test.
+________________
+
+
+4. Final Conclusion and Recommendation
+
+
+1. Primary Conclusion: The A/B test provides strong, statistically significant evidence that the new YouTube thumbnail (Treatment) results in a higher Click-Through Rate. The relative improvement is 27.19\%
+2. Mitigation of Imbalance: Although the randomization check failed for the 'Previously Watched Channel' covariate, the observed imbalance (Control had more previous watchers) would have inflated the Control CTR, making the Treatment's victory even more robust. The imbalance does not invalidate the conclusion that the Treatment is better; it suggests the true benefit might even be slightly larger than 27.19\%
+3. Recommendation: The new thumbnail should be implemented immediately. For future, more conservative analysis, techniques like logistic regression should be used to formally control for the imbalanced covariate, but this step is unlikely to change the overall decision.
