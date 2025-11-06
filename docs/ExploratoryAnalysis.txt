@@ -1,0 +1,69 @@
+﻿YouTube Thumbnail A/B Test Analysis Statistics: Exploratory Analysis 🔍
+
+
+Author: AMAL MOHAMED M - DATA SCIENCE INTERN
+________________
+
+
+1. Overview of Exploratory Data Analysis (EDA) 🔎
+
+
+Exploratory Data Analysis (EDA) is the crucial second phase of an A/B test analysis. Its primary purpose is to summarize, visualize, and inspect the data before performing formal statistical tests.
+Key Goals of EDA in A/B Testing:
+1. Metric Confirmation: Visually confirm the difference in the primary metric (Click-Through Rate).
+2. Validation of Randomization: Check if the control and treatment groups are balanced across important demographic and behavioral features (like Age, Country, and Previous Watch history). Poor randomization can invalidate the entire test.
+3. Identify Segments: Spot any sub-groups where the treatment effect might be unusually strong or weak.
+________________
+
+
+2. Analysis of the Exploratory Data Visualization 📈
+
+
+The Python script 02_exploratory_analysis.py generates four key plots to perform this validation and initial analysis.
+
+
+2.1. Click-Through Rate by Group (Plot 1: Top Left)
+
+
+* Metric: Click Rate (Calculated as TOTAL CLICKS/TOTAL USERS)
+* Visual Interpretation: The bar chart clearly shows the Treatment Group (orange bar) has a higher Click-Through Rate (CTR) than the Control Group (blue bar).
+   * Control CTR: approx 12.5%
+   * Treatment CTR: approx 15.9%
+* A/B Test Implication: This plot confirms the initial descriptive finding from the data generation phase: the new thumbnail (Treatment) is performing better, showing an observed lift.
+
+
+2.2. Age Distribution by Group (Plot 2: Top Right)
+
+
+* Metric: Count of users distributed across age bins, separated by group.
+* Visual Interpretation: This histogram shows that the age distribution is nearly identical for both the control (blue) and treatment (orange) groups across the entire age range (20 to 60+). The stacked bars are roughly the same height and follow the same pattern (e.g., small peaks around 30, 40, and 60).
+* A/B Test Implication: This is a positive sign of successful randomization. It confirms that age is not a confounding variable; any difference in CTR cannot be attributed to one group having an older or younger user base.
+
+
+2.3. Country Distribution by Group (Plot 3: Bottom Left)
+
+
+* Metric: Proportion of users from each country that belong to the control versus treatment group.
+* Visual Interpretation: The grouped bar chart shows that for every country (AU, CA, UK, US), the height of the control (blue) bar and the treatment (orange) bar are nearly equal, hovering around the 50% mark.
+   * Example (US): The control and treatment proportions in the US are essentially 50% /50%.
+* A/B Test Implication: This again confirms successful randomization based on geography. The user base is evenly distributed across test groups within each country.
+* Segmentation Note: While randomization is good, the slightly differing bar heights hint that for some countries (like the US and UK), the Treatment Group might have a slightly higher representation among users who are exposed to the experiment.
+
+
+2.4. Previous Channel Watchers by Group (Plot 4: Bottom Right)
+
+
+* Metric: Proportion of users who previously watched the channel versus those who haven't, separated by group.
+* Visual Interpretation:
+   * Not Watched (Left Bars): The control and treatment bars are almost perfectly 50% /50%
+   * Watched (Right Bars): The control and treatment bars are also very close to 50% / 50%
+* A/B Test Implication: Randomization is successful based on this behavioral feature. We are confident that one group wasn't disproportionately exposed to more existing (or new) customers, ensuring a fair test environment.
+________________
+
+
+3. Conclusion of the Exploratory Analysis 🎯
+
+
+1. Observed Effect Confirmed: The Treatment Group (new thumbnail) shows a clear and repeatable visual advantage in Click-Through Rate over the Control Group.
+2. Validation Passed: The analysis of age, country, and previous watch history confirms that the random assignment of users to the control and treatment groups was highly effective. The groups are balanced across all measured covariates.
+3. Proceed to Inference: Since the data quality and randomization checks passed, the observed difference in CTR is highly likely to be a result of the new thumbnail, not a flawed test setup. The next and final phase should be to conduct a formal Statistical Significance Test to quantify this likelihood (the $p$-value).
