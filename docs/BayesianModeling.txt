@@ -1,0 +1,102 @@
+﻿YouTube Thumbnail A/B Test Analysis Statistics: Bayesian Inference 🔮
+
+
+Author: AMAL MOHAMED M - DATA SCIENCE INTERN
+________________
+
+
+1. Introduction to Bayesian A/B Testing 🌌
+
+
+Bayesian A/B Testing offers an alternative, highly intuitive approach to hypothesis testing compared to the frequentist methods (T-test, Chi-Square). Instead of asking "What is the probability of seeing this data if there is no effect?" (the P-value), Bayesian analysis answers the direct business question: "What is the probability that the new thumbnail (Treatment) is actually better than the old one (Control)?"
+This method uses the Beta-Binomial Conjugate Prior to model the Click-Through Rate (CTR) of each group as a Beta distribution.
+* Prior: The initial belief about the CTR before seeing the data. A weak prior, Beta(2, 10), was used, assuming a baseline CTR of 2/2+10 = 16.67% with low confidence.
+* Likelihood: The observed data (clicks/non-clicks).
+* Posterior: The updated belief about the CTR after incorporating the data, calculated as Beta(alpha_{prior} + {Successes}, beta_{prior} + {Failures}).
+________________
+
+
+2. Posterior Distributions and Test Results
+
+
+
+
+A. Posterior Parameters
+
+
+The calculation uses the following observed data (based on the original data generation output and the script logic):
+* Control: 633 successes (clicks) / 5076 trials.
+* Treatment: 781 successes (clicks) / 4924 trials.
+Group
+	Successes
+	Failures
+	Prior (α,β)
+	Posterior (αpost​,βpost​)
+	Control
+	633
+	5076 - 633 = 4443
+	(2, 10)
+	Beta(635,445)
+	Treatment
+	781
+	$4924 - 781 = 4143$
+	$(2, 10)$
+	Beta(783,4153)
+	
+
+B. Bayesian Results
+
+
+The analysis uses 100,000 samples from these posterior distributions to calculate the key metrics.
+Metric
+	Value
+	Interpretation
+	Probability that treatment is better
+	1.0000 (100.0%)
+	The probability that the true CTR of the new thumbnail is higher than the old one. This result is overwhelming.
+	Mean improvement
+	0.0338
+	The expected difference in CTR between the treatment and control groups (3.38 percentage points).
+	95% Credible Interval (CI)
+	[0.0202,0.0475]
+	There is a 95% probability that the true difference in CTR is between 2.02 and 4.7 percentage points.
+	Expected loss if we choose treatment
+	0.000000
+	The expected cost (in lost clicks) if we incorrectly launch the treatment. A value of zero means there is virtually no risk in choosing the new thumbnail.
+	________________
+
+
+3. Analysis of Bayesian Visualizations 🖼️
+
+
+The visualization provides a powerful, intuitive summary of the results .
+
+
+A. Plot 1: Posterior Distributions of CTR (Left)
+
+
+* The two Beta distributions (blue for Control, orange for Treatment) are perfectly separate, with no overlap.
+* The Control distribution is centered around 0.125(12.5%).
+* The Treatment distribution is centered around 0.159(15.9%).
+* The lack of overlap visually confirms the 100.00% probability that the treatment's true CTR is higher than the control's.
+
+
+B. Plot 2: Distribution of Treatment Effect (Right)
+
+
+* This is the distribution of the difference (Treatment CTR} - Control CTR).
+* The entire green histogram is located to the right of the red dashed line (Difference = 0), meaning all sampled values showed a positive lift.
+* The Mean difference (blue solid line) is at 0.0338.
+* The visualization powerfully demonstrates that zero difference is not a credible outcome.
+________________
+
+
+4. Comprehensive Conclusion and Final Recommendation ✅
+
+
+All phases of the A/B test analysis converge on the same conclusion:
+1. Exploratory Analysis (Phase 2): Showed a clear visual lift for the Treatment group and confirmed strong randomization (except for a small imbalance in previous watchers).
+2. Frequentist Statistics (Phase 3): Concluded the lift was highly statistically significant (P approx 0.000001).
+3. Advanced Modeling (Phase 4): Provided a robust, adjusted odds ratio, confirming the significance while controlling for the detected covariate imbalance.
+4. Bayesian Inference (Phase 5): Provided the ultimate confidence measure: a 100.00% probability that the new thumbnail is better, with an expected lift of 3.38 percentage points and an expected loss of 0.
+Final Recommendation: Based on the unanimous and overwhelming evidence across all statistical methodologies, the new thumbnail (Treatment) should be deployed immediately and permanently. The test is conclusive.

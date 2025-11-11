@@ -1,0 +1,106 @@
+﻿YouTube Thumbnail A/B Test Analysis Statistics: Advanced Modeling (Logistic Regression) 🎯
+
+
+Author: AMAL MOHAMED M - DATA SCIENCE INTERN
+________________
+
+
+1. Rational for Advanced Modeling (Logistic Regression) 💡
+
+
+The previous statistical testing (Phase 3) established that the new thumbnail is significantly better, but it also revealed a covariate imbalance in the previously_watched_channel feature (P = 0.0275).
+* Problem: The Control Group was found to have a statistically higher proportion of previous watchers (30.0% vs. 27.9%). Since previous watchers inherently click more, this imbalance could potentially bias the results, even if the bias appears to favor the Control Group.
+* Solution: Logistic Regression is used to formally control for all measured covariates (Age, Country, and Previous Watch Status). This method models the probability of a click and isolates the pure effect of the is_treatment variable, yielding an unbiased estimate of the treatment effect, independent of the covariate imbalance.
+________________
+
+
+2. Logistic Regression Model Summary
+
+
+The model uses the formula: {Probability(text{Click}) ={is_treatment} + age} + {previously_watched_channel} + {country}.
+Statistic
+	Value
+	Interpretation
+	Dependent Variable
+	clicked (Binary)
+	The outcome being predicted (1 for click, 0 for no click).
+	No. Observations
+	10,000
+	The full sample size used in the analysis.
+	Model
+	Logit
+	The appropriate model for binary outcomes.
+	Pseudo R-squared
+	0.004044
+	Measures the model's explanatory power. A low value is expected in A/B tests as demographics are not the primary driver of the click—the intervention is.
+	LLR p-value
+	1.067\e-05
+	P-value for the overall model's significance. Since it's very low, the model is collectively predicting the click outcome significantly better than a null model.
+	________________
+
+
+3. Analysis of Adjusted Treatment Effect 📈
+
+
+The core of the analysis focuses on the coefficient for the is_treatment variable.
+| Metric | Coefficient (Log-Odds) | P-value (P>|z|) | Odds Ratio (exp({coef})) | 95% Confidence Interval |
+| :--- | :--- | :--- | :--- | :--- |
+| is_treatment |0.2791 | 0.000 | 1.3220 | [1.1807,1.4799] |
+
+
+Interpretation of Treatment Effect:
+
+
+1. Statistical Significance: The P-value is effectively 0.000, which is much less than 0.05. This confirms that the new thumbnail (Treatment) is still highly statistically significant even after accounting for all user demographics and the detected imbalance.
+2. Odds Ratio (Adjusted Lift): The odds ratio is 1.3220.
+   * This means the treatment group has 32.20 higher odds of clicking the video compared to the control group, after holding all other factors (age, country, previous watch status) constant.
+3. Confidence Interval: The 95% Confidence Interval for the Odds Ratio is [1.1807, 1.4799].
+   * Since the entire interval is above 1.0, we are highly confident that the true effect is positive and beneficial.
+________________
+
+
+4. Analysis of Covariates and Imbalance Control
+
+
+| Covariate | Coefficient (Log-Odds) | P-value (P>|z|) | Odds Ratio (exp(coef)) | Conclusion |
+| :--- | :--- | :--- | :--- | :--- |
+| previously_watched | 0.0664 | 0.291 | 1.0687 | Not statistically significant in this model. |
+| age | -0.0037 | 0.079 | 0.9963 | Not statistically significant (P>0.05). |
+| (country) [T.CA/UK/US] | Varies | Varies (e.g., US P=0.990) | Varies | No country shows a significant difference from the baseline country (AU). |
+
+
+Interpretation of Imbalance Control:
+
+
+1. Previous Watchers Effect: The previous watchers variable is not statistically significant in the final model (P=0.291), meaning it is not a strong predictor of clicking on its own.
+2. Successful Control: The logistic regression successfully isolated the effect of the thumbnail from the small difference in the previous watcher distribution. This confirms the initial positive result and provides a more precise and reliable estimate of the lift.
+________________
+
+
+5. Final Conclusion and Comparison 📝
+
+
+Metric
+	Simple Statistical Test (Phase 3)
+	Advanced Logistic Regression (Phase 4)
+	Primary Metric
+	Relative Improvement: 27.19%
+	Adjusted Odds Ratio:1.3220 (32.20% higher odds)
+	P-value
+	0.000001
+	0.000 (Highly Significant)
+	Confidence
+	High
+	Very High (Effect is significant even after controlling for potential bias)
+	Naive Odds Ratio
+	-
+	1.4111
+	Adjusted Odds Ratio
+	-
+	1.3220
+	Difference
+	-
+	0.0891 (Substantial difference, showing the importance of adjustment)
+	Overall Conclusion:
+The advanced modeling confirms and strengthens the initial finding. The new YouTube thumbnail is a clear winner. The simple analysis was slightly optimistic (Naive Odds Ratio of 1.41 vs. Adjusted Odds Ratio of 1.32). The Logistic Regression provides the most trustworthy result: the new thumbnail is statistically proven to increase the odds of a user clicking by 32.20% after controlling for user characteristics.
+Final Recommendation: Launch the new thumbnail (Treatment) to 100% of the audience.
